@@ -1,6 +1,6 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
-
+import { Parties } from '../../../../collections/parties';
 import template from './partiesList.html';
 
 class PartiesList {
