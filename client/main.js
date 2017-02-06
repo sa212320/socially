@@ -1,12 +1,13 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 import { Parties } from '../collections/parties';
+import template from './partiesList.html';
  
 angular.module('socially', [
     angularMeteor
   ])
   .component('partiesList', {
-    templateUrl: 'client/partiesList.html',
+    template,
     controllerAs: 'partiesList',
     controller($scope, $reactive) {
       'ngInject';
