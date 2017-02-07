@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
- 
 import { Parties } from './collection';
 import { Counts } from 'meteor/tmeasday:publish-counts';
 if (Meteor.isServer) {
@@ -25,6 +24,12 @@ if (Meteor.isServer) {
         }]
       }]
     };
+    if (typeof searchString === 'string' && searchString.length) {
+      selector.name = {
+        $regex: `.*${searchString}.*`,
+        $options : 'i'
+      };
+    }
     Counts.publish(this, 'numberOfParties', Parties.find(selector), {
       noReady: true
     });
