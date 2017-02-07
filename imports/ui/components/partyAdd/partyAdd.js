@@ -1,6 +1,6 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
- 
+import { Parties } from '../../../api/parties';
 import template from './partyAdd.html';
  
 class PartyAdd {
@@ -9,7 +9,12 @@ class PartyAdd {
   }
  
   submit() {
-    console.log('submit:', this.party);
+    Parties.insert(this.party);
+    this.reset();
+  }
+ 
+  reset() {
+    this.party = {};
   }
 }
  
