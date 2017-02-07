@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
  
 import { Parties } from './collection';
- 
+import { Counts } from 'meteor/tmeasday:publish-counts';
 if (Meteor.isServer) {
-  Meteor.publish('parties', function() {
+  Meteor.publish('parties', function(options) {
     const selector = {
       $or: [{
         // the public parties
@@ -25,7 +25,9 @@ if (Meteor.isServer) {
         }]
       }]
     };
- 
-    return Parties.find(selector);
+    Counts.publish(this, 'numberOfParties', Parties.find(selector), {
+      noReady: true
+    });
+    return Parties.find(selector, options);
   });
 }

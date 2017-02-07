@@ -1,22 +1,44 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
+import { Counts } from 'meteor/tmeasday:publish-counts';
 import template from './partiesList.html';
+import utilsPagination from 'angular-utils-pagination';
 import { Parties } from '../../../api/parties';
 import { name as PartyAdd } from '../partyAdd/partyAdd';
 import { name as PartyRemove } from '../partyRemove/partyRemove';
+
 
 class PartiesList {
   constructor($scope, $reactive) {
     'ngInject';
  
     $reactive(this).attach($scope);
-    this.subscribe('parties');
+    
+    this.perPage = 3;
+    this.page = 1;
+    this.sort = {
+      name: 1
+    };
+
+    this.subscribe('parties', () => [{
+      limit: parseInt(this.perPage),
+      skip: parseInt((this.getReactively('page') - 1) * this.perPage),
+      sort: this.getReactively('sort')}
+    ]);
     this.helpers({
       parties() {
-        return Parties.find({});
+        return Parties.find({}, {
+          sort : this.getReactively('sort')
+        });
+      },
+      partiesCount() {
+        return Counts.get('numberOfParties');
       }
     });
+  }
+  pageChanged(newPage) {
+    this.page = newPage;
   }
 }
  
@@ -27,6 +49,7 @@ export default angular.module(name, [
   angularMeteor,
   PartyAdd,
   uiRouter,
+  utilsPagination,
   PartyRemove
 ]).component(name, {
   template,
