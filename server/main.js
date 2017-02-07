@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 
 import { Parties } from '../imports/api/parties';
- 
+//import '../imports/startup/fixtures';
+import '../imports/api/parties';
+import '../imports/api/users';
 Meteor.startup(() => {
   if (Parties.find().count() === 0) {
     const parties = [{
