@@ -7,6 +7,7 @@ import utilsPagination from 'angular-utils-pagination';
 import { Parties } from '../../../api/parties';
 import { name as PartyAdd } from '../partyAdd/partyAdd';
 import { name as PartyRemove } from '../partyRemove/partyRemove';
+import { name as PartiesSort } from '../partiesSort/partiesSort';
 
 
 class PartiesList {
@@ -40,6 +41,9 @@ class PartiesList {
   pageChanged(newPage) {
     this.page = newPage;
   }
+  sortChanged(sort) {
+    this.sort = sort;
+  }
 }
  
 const name = 'partiesList';
@@ -50,6 +54,7 @@ export default angular.module(name, [
   PartyAdd,
   uiRouter,
   utilsPagination,
+  PartiesSort,
   PartyRemove
 ]).component(name, {
   template,

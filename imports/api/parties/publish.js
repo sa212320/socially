@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Parties } from './collection';
 import { Counts } from 'meteor/tmeasday:publish-counts';
 if (Meteor.isServer) {
-  Meteor.publish('parties', function(options) {
+  Meteor.publish('parties', function(options, searchString) {
     const selector = {
       $or: [{
         // the public parties
